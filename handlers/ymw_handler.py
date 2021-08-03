@@ -24,4 +24,13 @@ async def select_month(message: types.Message, state: FSMContext):
 async def select_weekday(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['month'] = message.text
+    await message.answer("Выберите день.")
     await YearMonthWeekday.Weekday()
+
+
+@dp.message_handler(state=YearMonthWeekday.Weekday)
+async def days_of_week_in_month(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        await message.answer(f"Вы выбрали {data['year']} год, "
+                             f"{data['month']}  и {message.text} день.")
+    await state.finish()
