@@ -18,6 +18,17 @@ months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май'
 weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
 
 
+@dp.message_handler(Command("cancel"), state=None)
+async def cancel():
+    pass
+
+
+@dp.message_handler(Command("cancel"), state="*")
+async def cancel(message: types.Message, state: FSMContext):
+    await message.answer("Отмена.", reply_markup=types.ReplyKeyboardRemove())
+    await state.finish()
+
+
 @dp.message_handler(Command("start"), state=None)
 async def select_year(message: types.Message):
     global years
