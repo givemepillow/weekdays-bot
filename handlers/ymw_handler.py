@@ -80,7 +80,7 @@ async def days_of_week_in_month(message: types.Message, state: FSMContext):
             month = data['month']
             start_day, end_day = 1, calendar.monthrange(data['year'], data['month'])[1]
             count_of_days = np.busday_count(f"{year}-{month:02}",
-                                            f"{year}-{((month + 1) % 13):02}",
+                                            f"{year}-{((month + 1) % 12):02}",
                                             weekmask=f"{days[weekdays.index(message.text)]}")
             await message.answer(f"{message.text}:\nc {start_day:02}.{month:02}.{year} по "
                                  f"{end_day:02}.{month:02}.{year}\n"
