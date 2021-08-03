@@ -15,7 +15,7 @@ years = [current_year - 1, current_year, current_year + 1]
 months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
           'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
 
-weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
+weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
 
 
 @dp.message_handler(Command("cancel"), state=None)
@@ -82,8 +82,8 @@ async def days_of_week_in_month(message: types.Message, state: FSMContext):
             count_of_days = np.busday_count(f"{year}-{month:02}",
                                             f"{year}-{((month + 1) % 13):02}",
                                             weekmask=f"{days[weekdays.index(message.text)]}")
-            await message.answer(f"В с {start_day:02}.{month:02}.{year} по "
-                                 f"{end_day:02}.{month:02}.{year} "
-                                 f" {count_of_days} {message.text.lower()}.",
+            await message.answer(f"{message.text}:\nc {start_day:02}.{month:02}.{year} по "
+                                 f"{end_day:02}.{month:02}.{year}\n"
+                                 f" {count_of_days} штуки.",
                                  reply_markup=types.ReplyKeyboardRemove())
         await state.finish()
