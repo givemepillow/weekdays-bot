@@ -88,6 +88,6 @@ async def days_of_week_in_month(message: types.Message, state: FSMContext):
                                             weekmask=f"{days[weekdays.index(message.text)]}")
             await message.answer(f"{message.text}:\nc {start_day:02}.{month_start:02}.{year} по "
                                  f"{end_day:02}.{month_end:02}.{year}\n"
-                                 f" {count_of_days} штуки.",
+                                 f" {count_of_days} шт.",
                                  reply_markup=types.ReplyKeyboardRemove())
         await state.finish()
