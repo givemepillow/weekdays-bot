@@ -77,7 +77,9 @@ async def days_of_week_in_month(message: types.Message, state: FSMContext):
         async with state.proxy() as data:
             days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
             year = data['year']
-            month_start, month_end = data['month'], ((data['month'] + 1) % 13)
+            month_start, month_end = data['month'], data['month'] + 1
+            if month_end > 12:
+                month_end = 1
             if month_start == 12:
                 end_year = data['year'] + 1
             else:
