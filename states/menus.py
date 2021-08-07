@@ -5,3 +5,4 @@ class Menus(StatesGroup):
     main_menu = State()
     settings_submenu = State()
     represent_submenu = State()
+    add_holidays_submenu = State()
