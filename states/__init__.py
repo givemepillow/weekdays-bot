@@ -1,3 +1,1 @@
-from .ymw import YearMonthWeekday
-
-__all__ = ["YearMonthWeekday"]
+from .menus import Menus
