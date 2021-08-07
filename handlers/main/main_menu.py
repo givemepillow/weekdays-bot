@@ -1,7 +1,7 @@
 from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import Message
 
-from markup.text import menu, buttons
+from markups.text import menu, buttons
 from loader import dp
 
 
