@@ -6,7 +6,7 @@ from markups.text import menu, buttons
 from loader import dp
 
 
-@dp.message_handler(Text(equals=buttons.represent_btn.text), state=Menus.main_menu)
+@dp.message_handler(Text(equals=buttons.represent_btn.text), state=[Menus.main_menu, None])
 async def represent_submenu(message: Message):
     await Menus.represent_submenu.set()
     await message.answer(f"В каком виде представить данные?", reply_markup=menu.represent_submenu)
