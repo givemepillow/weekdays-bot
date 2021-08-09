@@ -9,6 +9,7 @@ from states import Menus
 calendar = InlineCalendar()
 
 
-@dp.message_handler(Text(equals=buttons.edit_holidays_btn.text), state=Menus.settings_submenu)
+@dp.message_handler(Text(equals=buttons.edit_holidays_btn.text), state=[Menus.settings_submenu, None])
 async def open_calendar_handler(message: Message):
+    await Menus.calendar.set()
     await message.answer("Отметье выходные: ", reply_markup=await calendar())
