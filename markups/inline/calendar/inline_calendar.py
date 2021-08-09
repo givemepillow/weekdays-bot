@@ -1,9 +1,10 @@
 import calendar
 import locale
 from datetime import datetime, timedelta
+
+from aiogram.types import CallbackQuery
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.callback_data import CallbackData
-from aiogram.types import CallbackQuery
 
 PREV_YEAR = 'PREV-YEAR'
 NEXT_YEAR = 'NEXT-YEAR'
@@ -13,11 +14,12 @@ TARGET_DATE = 'TARGET-DATE'
 PLUG = 'PLUG'
 ACTION = 'ACTION'
 YEAR, MONTH, DAY = 'YEAR', 'MONTH', 'DAY'
-CALLBACKDATA_ID = 'CALENDAR'
+CALLBACK_DATA_ID = 'CALENDAR'
 
 storage = []
 
-calendar_cb = CallbackData(CALLBACKDATA_ID, ACTION, YEAR, MONTH, DAY)
+calendar_cb = CallbackData(CALLBACK_DATA_ID, ACTION, YEAR, MONTH, DAY)
+
 
 class InlineCalendar:
     weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
@@ -92,7 +94,27 @@ class InlineCalendar:
 
         return inline_kb
 
-
-    async def selection(self, query: CallbackQuery, data: CallbackData) -> tuple[bool, datetime]:
+    @staticmethod
+    async def selection(query: CallbackQuery, callback_data: dict) -> tuple[bool, datetime]:
         selected, date = False, None
-        temp_date = datetime(int(data[YEAR]), int(data[MONTH]), 1)
+        temp_date = datetime(int(callback_data[YEAR]), int(callback_data[MONTH]), 1)
+
+        if callback_data[ACTION] == PLUG:
+            await query.answer(cache_time=60)
+        if callback_data[ACTION] == TARGET_DATE:
+            date = datetime(
+                int(callback_data[YEAR]),
+                int(callback_data[MONTH]),
+                int(callback_data[DAY])
+            )
+            selected = True
+        elif callback_data[ACTION] == PREV_YEAR:
+            date = temp_date - timedelta(days=365)
+        elif callback_data[ACTION] == NEXT_YEAR:
+            date = temp_date + timedelta(days=365)
+        elif callback_data[ACTION] == PREV_MONTH:
+            date = temp_date - timedelta(days=1)
+        elif callback_data[ACTION] == NEXT_MONTH:
+            date = temp_date + timedelta(days=31)
+
+        return selected, date
