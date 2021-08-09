@@ -6,3 +6,5 @@ class Menus(StatesGroup):
     settings_submenu = State()
     represent_submenu = State()
     calendar = State()
+    are_u_sure = State()
+    reset_complete = State()
