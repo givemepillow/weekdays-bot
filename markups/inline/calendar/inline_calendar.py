@@ -6,6 +6,8 @@ from aiogram.types import CallbackQuery
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.callback_data import CallbackData
 
+__all__ = ['storage', 'InlineCalendar', 'calendar_cb']
+
 PREV_YEAR = 'PREV-YEAR'
 NEXT_YEAR = 'NEXT-YEAR'
 PREV_MONTH = 'PREV-MONTH'
