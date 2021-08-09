@@ -28,4 +28,6 @@ class InlineCalendar:
                        month: int = datetime.now().month,
                        day: int = datetime.now().day
                        ) -> InlineKeyboardMarkup:
-        pass
+
+        inline_kb = InlineKeyboardMarkup(row_width=7)
+        plug_cb = calendar_cb.new(PLUG, year, month, day)
