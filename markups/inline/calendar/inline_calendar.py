@@ -91,3 +91,8 @@ class InlineCalendar:
                         ))
 
         return inline_kb
+
+
+    async def selection(self, query: CallbackQuery, data: CallbackData) -> tuple[bool, datetime]:
+        selected, date = False, None
+        temp_date = datetime(int(data[YEAR]), int(data[MONTH]), 1)
