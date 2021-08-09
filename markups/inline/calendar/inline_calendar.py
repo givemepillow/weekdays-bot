@@ -16,3 +16,9 @@ YEAR, MONTH, DAY = 'YEAR', 'MONTH', 'DAY'
 CALLBACKDATA_ID = 'CALENDAR'
 
 calendar_cb = CallbackData(CALLBACKDATA_ID, ACTION, YEAR, MONTH, DAY)
+
+class InlineCalendar:
+    weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+
+    def __init__(self):
+        locale.setlocale(locale.LC_ALL, "ru_RU")
