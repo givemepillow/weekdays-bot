@@ -33,7 +33,6 @@ class InlineCalendar:
         plug_cb = calendar_cb.new(PLUG, year, month, day)
 
         inline_kb.row()
-
         inline_kb.insert(InlineKeyboardButton(
             "<<",
             callback_data=calendar_cb.new(PREV_YEAR, year, month, day)
@@ -47,4 +46,18 @@ class InlineCalendar:
         inline_kb.insert(InlineKeyboardButton(
             ">>",
             callback_data=calendar_cb.new(NEXT_YEAR, year, month, day)
+        ))
+
+        inline_kb.row()
+        inline_kb.insert(InlineKeyboardButton(
+            "<", callback_data=calendar_cb.new(PREV_MONTH, year, month, day)
+        ))
+
+        inline_kb.insert(InlineKeyboardButton(
+            f'{calendar.month_name[month]}',
+            callback_data=plug_cb
+        ))
+
+        inline_kb.insert(InlineKeyboardButton(
+            ">", callback_data=calendar_cb.new(NEXT_MONTH, year, month, day)
         ))
