@@ -1,0 +1,16 @@
+import calendar
+import locale
+from datetime import datetime, timedelta
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.utils.callback_data import CallbackData
+from aiogram.types import CallbackQuery
+
+PREV_YEAR = 'PREV-YEAR'
+NEXT_YEAR = 'NEXT-YEAR'
+PREV_MONTH = 'PREV-MONTH'
+NEXT_MONTH = 'NEXT-MONTH'
+TARGET_DATE = 'TARGET-DATE'
+PLUG = 'PLUG'
+ACTION = 'ACTION'
+YEAR, MONTH, DAY = 'YEAR', 'MONTH', 'DAY'
+CALLBACKDATA_ID = 'CALENDAR'
