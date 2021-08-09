@@ -1,4 +1,3 @@
-from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import Message
 
@@ -7,6 +6,7 @@ from markups.text import menu, buttons
 from states import Menus
 
 
+@dp.message_handler(state=None)  # Show the main menu if something went wrong.
 @dp.message_handler(Text(equals=buttons.go_back_btn.text), state=[Menus.settings_submenu, Menus.represent_submenu])
 @dp.message_handler(Command("start"), state='*')
 async def main_menu(message: Message):
