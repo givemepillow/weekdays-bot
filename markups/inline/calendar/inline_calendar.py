@@ -22,3 +22,10 @@ class InlineCalendar:
 
     def __init__(self):
         locale.setlocale(locale.LC_ALL, "ru_RU")
+
+    async def __call__(self,
+                       year: int = datetime.now().year,
+                       month: int = datetime.now().month,
+                       day: int = datetime.now().day
+                       ) -> InlineKeyboardMarkup:
+        pass
