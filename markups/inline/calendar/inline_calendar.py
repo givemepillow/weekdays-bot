@@ -15,10 +15,13 @@ ACTION = 'ACTION'
 YEAR, MONTH, DAY = 'YEAR', 'MONTH', 'DAY'
 CALLBACKDATA_ID = 'CALENDAR'
 
+storage = []
+
 calendar_cb = CallbackData(CALLBACKDATA_ID, ACTION, YEAR, MONTH, DAY)
 
 class InlineCalendar:
     weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+    CHECK_MARK = '✅'
 
     def __init__(self):
         locale.setlocale(locale.LC_ALL, "ru_RU")
@@ -32,6 +35,7 @@ class InlineCalendar:
         inline_kb = InlineKeyboardMarkup(row_width=7)
         plug_cb = calendar_cb.new(PLUG, year, month, day)
 
+        # Row with year.
         inline_kb.row()
         inline_kb.insert(InlineKeyboardButton(
             "<<",
@@ -48,6 +52,7 @@ class InlineCalendar:
             callback_data=calendar_cb.new(NEXT_YEAR, year, month, day)
         ))
 
+        # Row with month.
         inline_kb.row()
         inline_kb.insert(InlineKeyboardButton(
             "<", callback_data=calendar_cb.new(PREV_MONTH, year, month, day)
@@ -61,3 +66,28 @@ class InlineCalendar:
         inline_kb.insert(InlineKeyboardButton(
             ">", callback_data=calendar_cb.new(NEXT_MONTH, year, month, day)
         ))
+
+        # Row with week days.
+        inline_kb.row()
+        for weekday in self.weekdays:
+            inline_kb.insert(InlineKeyboardButton(weekday, callback_data=plug_cb))
+
+        # Rows with days.
+        month_calendar = calendar.monthcalendar(year, month)
+        for week in month_calendar:
+            inline_kb.row()
+            for day in week:
+                if day == 0:
+                    inline_kb.insert(InlineKeyboardButton(" ", callback_data=plug_cb))
+                else:
+                    if int(datetime(int(year), int(month), int(day)).timestamp()) in storage:
+
+                        inline_kb.insert(InlineKeyboardButton(
+                            self.CHECK_MARK, callback_data=calendar_cb.new(TARGET_DATE, year, month, day)
+                        ))
+                    else:
+                        inline_kb.insert(InlineKeyboardButton(
+                            str(day), callback_data=calendar_cb.new(TARGET_DATE, year, month, day)
+                        ))
+
+        return inline_kb
