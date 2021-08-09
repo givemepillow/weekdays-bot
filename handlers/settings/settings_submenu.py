@@ -10,4 +10,4 @@ from states import Menus
 @dp.message_handler(Text(equals=buttons.settings_btn.text), state=[Menus.main_menu, None])
 async def settings_submenu(message: Message):
     await Menus.settings_submenu.set()
-    await message.answer(f"Вы пережли в настройки. Что хотите сделать?", reply_markup=menu.settings_submenu)
+    await message.answer(f"Вы перешли в настройки.", reply_markup=menu.settings_submenu)
