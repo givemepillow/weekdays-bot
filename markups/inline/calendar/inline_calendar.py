@@ -31,3 +31,20 @@ class InlineCalendar:
 
         inline_kb = InlineKeyboardMarkup(row_width=7)
         plug_cb = calendar_cb.new(PLUG, year, month, day)
+
+        inline_kb.row()
+
+        inline_kb.insert(InlineKeyboardButton(
+            "<<",
+            callback_data=calendar_cb.new(PREV_YEAR, year, month, day)
+        ))
+
+        inline_kb.insert(InlineKeyboardButton(
+            f'{str(year)}',
+            callback_data=plug_cb
+        ))
+
+        inline_kb.insert(InlineKeyboardButton(
+            ">>",
+            callback_data=calendar_cb.new(NEXT_YEAR, year, month, day)
+        ))
