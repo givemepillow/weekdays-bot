@@ -18,14 +18,3 @@ async def settings_submenu(message: Message, state: FSMContext):
     await Menus.settings_submenu.set()
     await message.answer(f"Вы перешли в настройки.", reply_markup=menu.settings_submenu)
 
-
-@dp.message_handler(Text(equals=buttons.reset_holidays_btn.text), state=Menus.settings_submenu)
-async def are_u_sure(message: Message):
-    await Menus.are_u_sure.set()
-    await message.answer(f"Вы вы точно хотите очистить календарь?.", reply_markup=menu.are_u_sure_submenu)
-
-
-@dp.message_handler(Text(equals=buttons.yes_btn.text), state=Menus.are_u_sure)
-async def reset_complete(message: Message):
-    await Menus.reset_complete.set()
-    await message.answer(f"Все выходные сброшены.", reply_markup=menu.go_back_submenu)
