@@ -1,7 +1,11 @@
+import locale
+
 from aiogram import Bot, types, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from envfileparser import get_env
 from database import Database
+
+locale.setlocale(locale.LC_ALL, "ru_RU")
 
 bot = Bot(token=get_env('API_TOKEN'), parse_mode=types.ParseMode.HTML)
 storage = MemoryStorage()

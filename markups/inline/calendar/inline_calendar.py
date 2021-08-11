@@ -22,11 +22,10 @@ calendar_cb = CallbackData(CALLBACK_DATA_ID, ACTION, YEAR, MONTH, DAY)
 
 
 class InlineCalendar:
-    weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
-    CHECK_MARK = '✅'
 
     def __init__(self):
-        locale.setlocale(locale.LC_ALL, "ru_RU")
+        self.weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+        self.CHECK_MARK = '✅'
 
     async def __call__(self,
                        storage: list,
