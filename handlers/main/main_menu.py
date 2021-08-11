@@ -7,8 +7,12 @@ from states import Menus
 
 
 @dp.message_handler(Text(equals=buttons.go_back_btn.text),
-                    state=[Menus.settings_submenu, Menus.represent_submenu, None])
+                    state=[
+                        Menus.settings_submenu,
+                        Menus.represent_submenu,
+                        None
+                    ])
 @dp.message_handler(Command("start"), state='*')
 async def main_menu(message: Message):
-    await message.answer("Главное меню. Выбирете что хотите сделать:", reply_markup=menu.main_menu)
+    await message.answer("📅 Главное меню. Выбирете что хотите сделать:", reply_markup=menu.main_menu)
     await Menus.main_menu.set()
