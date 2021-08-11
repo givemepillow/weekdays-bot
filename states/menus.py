@@ -8,3 +8,5 @@ class Menus(StatesGroup):
     calendar = State()
     are_u_sure = State()
     reset_complete = State()
+    representation_months = State()
+    representation_year = State()
