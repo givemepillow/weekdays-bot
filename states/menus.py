@@ -10,3 +10,4 @@ class Menus(StatesGroup):
     reset_complete = State()
     representation_months = State()
     representation_year = State()
+    representation_holidays = State()
