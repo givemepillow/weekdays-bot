@@ -1,5 +1,5 @@
 import calendar
-import locale
+
 from datetime import datetime, timedelta
 
 from aiogram.types import CallbackQuery
