@@ -3,7 +3,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.types import Message, CallbackQuery
 
 from loader import dp
-from markups.inline.calendar import InlineCalendar, calendar_cb, temp_storage
+from markups.inline.calendar import InlineCalendar, calendar_cb
 from markups.text import buttons, menu
 from states import Menus
 
@@ -14,22 +14,29 @@ calendar = InlineCalendar()
 async def open_calendar(message: Message, state: FSMContext):
     await Menus.calendar.set()
     await message.answer(text="Редактирование выходных.", reply_markup=menu.go_back_submenu)
-    cal_msg = await message.answer(text='Отметьте выходыне:', reply_markup=await calendar())
+    user_id = message.from_user.id
     async with state.proxy() as data:
+        if user_id not in data.keys():
+            data[user_id] = []
+        cal_msg = await message.answer(text='Отметьте выходыне:',
+                                       reply_markup=await calendar(storage=data[user_id]))
         data['calendar_id'] = cal_msg.message_id
 
 
 @dp.callback_query_handler(calendar_cb.filter(), state=Menus.calendar)
-async def calendar_selection(callback_query: CallbackQuery, callback_data: dict):
+async def calendar_selection(callback_query: CallbackQuery, callback_data: dict, state: FSMContext):
     await Menus.calendar.set()
     selected, date = await InlineCalendar.selection(callback_query, callback_data)
-    if selected:
-        stamp = int(date.timestamp())
-        if stamp in temp_storage:
-            temp_storage.pop(temp_storage.index(stamp))
-        else:
-            temp_storage.append(stamp)
-    if date is not None:
-        await callback_query.message.edit_reply_markup(
-            reply_markup=await calendar(int(date.year), int(date.month), int(date.day))
-        )
+    user_id = callback_query.from_user.id
+    async with state.proxy() as data:
+        if selected:
+            stamp = int(date.timestamp())
+            if stamp in data[user_id]:
+                data[user_id].pop(data[user_id].index(stamp))
+            else:
+                data[user_id].append(stamp)
+        if date is not None:
+            await callback_query.message.edit_reply_markup(
+                reply_markup=await calendar(data[user_id], int(date.year), int(date.month),
+                                            int(date.day))
+            )

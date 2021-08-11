@@ -6,7 +6,7 @@ from aiogram.types import CallbackQuery
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.callback_data import CallbackData
 
-__all__ = ['temp_storage', 'InlineCalendar', 'calendar_cb']
+__all__ = ['InlineCalendar', 'calendar_cb']
 
 PREV_YEAR = 'PREV-YEAR'
 NEXT_YEAR = 'NEXT-YEAR'
@@ -17,8 +17,6 @@ PLUG = 'PLUG'
 ACTION = 'ACTION'
 YEAR, MONTH, DAY = 'YEAR', 'MONTH', 'DAY'
 CALLBACK_DATA_ID = 'CALENDAR'
-
-temp_storage = []
 
 calendar_cb = CallbackData(CALLBACK_DATA_ID, ACTION, YEAR, MONTH, DAY)
 
@@ -31,6 +29,7 @@ class InlineCalendar:
         locale.setlocale(locale.LC_ALL, "ru_RU")
 
     async def __call__(self,
+                       storage: list,
                        year: int = datetime.now().year,
                        month: int = datetime.now().month,
                        day: int = datetime.now().day
@@ -84,8 +83,7 @@ class InlineCalendar:
                 if day == 0:
                     inline_kb.insert(InlineKeyboardButton(" ", callback_data=plug_cb))
                 else:
-                    if int(datetime(int(year), int(month), int(day)).timestamp()) in temp_storage:
-
+                    if int(datetime(int(year), int(month), int(day)).timestamp()) in storage:
                         inline_kb.insert(InlineKeyboardButton(
                             self.CHECK_MARK, callback_data=calendar_cb.new(TARGET_DATE, year, month, day)
                         ))
