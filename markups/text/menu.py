@@ -36,7 +36,7 @@ go_back_submenu = ReplyKeyboardMarkup(
 edit_calendar_submenu = ReplyKeyboardMarkup(
     resize_keyboard=True,
     row_width=2
-).add(edit_holidays_save_btn, edit_holidays_cancel_btn, go_back_btn)
+).add(edit_holidays_save_btn, edit_holidays_cancel_btn)
 
 
 are_u_sure_submenu = ReplyKeyboardMarkup(
