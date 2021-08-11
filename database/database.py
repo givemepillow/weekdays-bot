@@ -18,16 +18,16 @@ class Database:
 
     async def save_user_holidays(self, user_id: int, user_holidays: dict):
         async with aiosqlite.connect(self.db_name) as db:
-            user = await db.execute_fetchall(f"SELECT user_id FROM {self.table_name} WHERE user_id = {user_id};")
-            if len(user) == 0:
+            user = await db.execute_fetchall(f"SELECT COUNT(*) FROM {self.table_name} WHERE user_id = {user_id};")
+            if user[0][0] == 0:
                 await db.execute(
                     f"INSERT INTO {self.table_name} (user_id, holidays) VALUES (?, ?);",
                     (user_id, str(json.dumps(user_holidays))))
                 assert db.total_changes > 0
             else:
                 await db.execute(
-                    f"UPDATE {self.table_name} SET user_id = ?, holidays = ?",
-                    (user_id, str(json.dumps(user_holidays))))
+                    f"UPDATE {self.table_name} SET holidays = ? WHERE user_id = ?",
+                    (str(json.dumps(user_holidays)), user_id))
             await db.commit()
 
     async def get_user_holidays(self, user_id: int):
