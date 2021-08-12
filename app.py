@@ -1,11 +1,10 @@
 from aiogram import executor
 
 from handlers import dp
-from loader import bot, storage, db
+from loader import storage, db
 
 
 async def on_shutdown(*args):
-    await bot.close()
     await storage.close()
 
 
