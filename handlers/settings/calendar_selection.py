@@ -13,8 +13,8 @@ async def calendar_selection(callback_query: CallbackQuery, callback_data: dict,
     selected, date = await InlineCalendar.selection(callback_query, callback_data)
     user_id = callback_query.from_user.id
     async with state.proxy() as data:
+        data['cb_query_id'] = callback_query.id
         if selected:
-            data['cb_query_id'] = callback_query.id
             stamp = int(date.timestamp())
             if stamp in data[user_id]:
                 data[user_id].pop(data[user_id].index(stamp))
