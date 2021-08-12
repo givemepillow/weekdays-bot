@@ -1,7 +1,7 @@
 from datetime import datetime
-import calendar
+
 from loader import db
-from .weekdays_counter import months_names
+from .date_names import months_names
 
 
 async def holidays(user_id):
