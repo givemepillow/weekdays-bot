@@ -1,5 +1,4 @@
 import calendar
-
 from datetime import datetime, timedelta
 
 from aiogram.types import CallbackQuery
@@ -25,6 +24,8 @@ class InlineCalendar:
 
     def __init__(self):
         self.weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+        self.months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь',
+                       'Ноябрь', 'Декабрь']
         self.CHECK_MARK = '✅'
 
     async def __call__(self,
@@ -61,7 +62,7 @@ class InlineCalendar:
         ))
 
         inline_kb.insert(InlineKeyboardButton(
-            f'{calendar.month_name[month]}',
+            f'{self.months[month - 1]}',
             callback_data=plug_cb
         ))
 
