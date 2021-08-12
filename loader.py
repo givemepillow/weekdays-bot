@@ -7,4 +7,4 @@ from database import Database
 bot = Bot(token=get_env('API_TOKEN'), parse_mode=types.ParseMode.HTML)
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
-db = Database(f"database/{get_env('DB_NAME')}.db")
+db = Database(get_env('PATH_TO_DB'))
