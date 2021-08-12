@@ -5,7 +5,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from envfileparser import get_env
 from database import Database
 
-locale.setlocale(locale.LC_ALL, "ru_RU")
+locale.setlocale(locale.LC_ALL, get_env('LOCALE'))
 
 bot = Bot(token=get_env('API_TOKEN'), parse_mode=types.ParseMode.HTML)
 storage = MemoryStorage()
