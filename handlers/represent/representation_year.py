@@ -1,6 +1,6 @@
 from aiogram.dispatcher.filters import Text
 from aiogram.types import Message
-from prettytable import PrettyTable
+
 from loader import dp
 from markups.text import menu, buttons
 from states import Menus
