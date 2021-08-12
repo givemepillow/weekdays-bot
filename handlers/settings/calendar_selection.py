@@ -8,6 +8,7 @@ from states import Menus
 
 @dp.callback_query_handler(calendar_cb.filter(), state=Menus.calendar)
 async def calendar_selection(callback_query: CallbackQuery, callback_data: dict, state: FSMContext):
+    await callback_query.answer(text=None)
     await Menus.calendar.set()
     selected, date = await InlineCalendar.selection(callback_query, callback_data)
     user_id = callback_query.from_user.id
