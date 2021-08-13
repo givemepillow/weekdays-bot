@@ -6,6 +6,7 @@ from loader import storage, db
 
 async def on_shutdown(*args):
     await storage.close()
+    await db.close()
 
 
 async def on_startup(*args):
