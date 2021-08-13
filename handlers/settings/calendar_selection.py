@@ -12,6 +12,7 @@ async def calendar_selection(callback_query: CallbackQuery, callback_data: dict,
     await Menus.calendar.set()
     selected, date = await InlineCalendar.selection(callback_query, callback_data)
     user_id = callback_query.from_user.id
+    key = 'calendar_id' + str(user_id)
     async with state.proxy() as data:
         if selected:
             stamp = int(date.timestamp())
@@ -20,7 +21,8 @@ async def calendar_selection(callback_query: CallbackQuery, callback_data: dict,
             else:
                 data[user_id].append(stamp)
         if date is not None:
-            await callback_query.message.edit_reply_markup(
+            cal_msg = await callback_query.message.edit_reply_markup(
                 reply_markup=await InlineCalendar()(data[user_id], int(date.year), int(date.month),
                                                     int(date.day))
             )
+            data[key] = cal_msg.message_id
