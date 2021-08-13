@@ -22,10 +22,13 @@ async def calendar_selection(callback_query: CallbackQuery, callback_data: dict,
             else:
                 data[user_id].append(stamp)
         if date is not None:
+            message_id = None
             try:
                 cal_msg = await callback_query.message.edit_reply_markup(
                     reply_markup=await InlineCalendar()(data[user_id], int(date.year), int(date.month),
                                                         int(date.day)))
-                data[key] = cal_msg.message_id
+                message_id = cal_msg.message_id
             except aiogram.utils.exceptions.MessageNotModified:
-                print('Message is not modified')
+                pass
+            finally:
+                data[key] = message_id

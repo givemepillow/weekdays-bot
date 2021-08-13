@@ -21,7 +21,7 @@ async def settings_submenu(message: Message, state: FSMContext):
             try:
                 await bot.delete_message(chat_id=message.chat.id, message_id=data[key])
             except aiogram.utils.exceptions.MessageToDeleteNotFound:
-                print(f"Message to delete not found! state={state.get_state()}, text={message.text}")
+                pass
             finally:
                 data[key] = None
             if message.text == buttons.edit_holidays_save_btn.text:
