@@ -19,8 +19,8 @@ async def settings_submenu(message: Message, state: FSMContext):
             answer_text = f"Выходные обновлены. 🟢"
         elif message.text == buttons.edit_holidays_cancel_btn.text:
             answer_text = f"Последние изменения отменены. ⭕️"
+        await message.answer(f"{answer_text}", reply_markup=menu.settings_submenu)
         if 'calendar_id' in data and data['calendar_id'] is not None:
             await bot.delete_message(chat_id=message.chat.id, message_id=data['calendar_id'])
             data['calendar_id'] = None
     await Menus.settings_submenu.set()
-    await message.answer(f"{answer_text}", reply_markup=menu.settings_submenu)
