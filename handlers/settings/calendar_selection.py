@@ -1,3 +1,4 @@
+import aiogram
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
 
@@ -21,8 +22,11 @@ async def calendar_selection(callback_query: CallbackQuery, callback_data: dict,
             else:
                 data[user_id].append(stamp)
         if date is not None:
-            cal_msg = await callback_query.message.edit_reply_markup(
-                reply_markup=await InlineCalendar()(data[user_id], int(date.year), int(date.month),
-                                                    int(date.day))
-            )
-            data[key] = cal_msg.message_id
+            try:
+                cal_msg = await callback_query.message.edit_reply_markup(
+                    reply_markup=await InlineCalendar()(data[user_id], int(date.year), int(date.month),
+                                                        int(date.day)))
+            except aiogram.utils.exceptions.MessageNotModified:
+                print('Message is not modified')
+            finally:
+                data[key] = cal_msg.message_id
